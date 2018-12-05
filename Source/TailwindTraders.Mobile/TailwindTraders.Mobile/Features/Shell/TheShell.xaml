@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!-- Currently it's needed to pass the entire qualified name as x:Class -->
 <Shell x:Name="theShell"
   x:Class="TailwindTraders.Mobile.Features.Shell.TheShell"
@@ -9,8 +9,8 @@
   xmlns:productcategory="clr-namespace:TailwindTraders.Mobile.Features.Product.Category"
   Title="Tailwind Traders"
   Route="tailwindtraders"
-  RouteHost="www.microsoft.com"
-  RouteScheme="http">
+  RouteHost="microsoft.com"
+  RouteScheme="app">
 
   <Shell.Resources>
     <ResourceDictionary>
@@ -62,13 +62,13 @@
     Command="{Binding BindingContext.ProductTypeCommand}"
     CommandParameter="4"
     Text="Gardening" />
-
-  <ShellItem
-    Title="Home"
-    Route="home">
-    <ShellContent ContentTemplate="{DataTemplate home:HomePage}" />
-  </ShellItem>
-
+    
+    <ShellItem Route="a" Title="Home">
+        <ShellSection Route="b">
+            <ShellContent Route="home" Title="Home" ContentTemplate="{DataTemplate home:HomePage}" />
+        </ShellSection>
+    </ShellItem>
+  
   <MenuItem
     BindingContext="{x:Reference theShell}"
     Command="{Binding BindingContext.ProfileCommand}"
@@ -78,5 +78,12 @@
     BindingContext="{x:Reference theShell}"
     Command="{Binding BindingContext.LogOutCommand}"
     Text="Log out" />
+    
+  <MenuItem
+    Text="Go to Category" 
+    BindingContext="{x:Reference theShell}"
+    Command="{Binding BindingContext.GoToCategoryCommand}"
+    CommandParameter="1"
+    />
 
 </Shell>

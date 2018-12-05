@@ -3,17 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using TailwindTraders.Mobile.Features.Common;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
 namespace TailwindTraders.Mobile.Features.Product.Category
 {
-    public partial class ProductCategoryPage
+    [QueryProperty("TypeID", "id")]
+    public partial class ProductCategoryPage : BaseStateAwareContentPage<ProductCategoryViewModel, ProductCategoryViewModel.State>
     {
-        public ProductCategoryPage(string typeId)
+        public ProductCategoryPage()
         {
             InitializeComponent();
-            BindingContext = new ProductCategoryViewModel(typeId);
+        }
+
+        private string _typeId;
+        public string TypeID
+        {
+            get
+            {
+                return _typeId;
+            }
+            set
+            {
+                _typeId = value;
+                BindingContext = new ProductCategoryViewModel(_typeId);
+            }
         }
 
         internal override IEnumerable<VisualElement> GetStateAwareVisualElements() => new VisualElement[]
@@ -24,6 +39,7 @@ namespace TailwindTraders.Mobile.Features.Product.Category
 
         protected override void OnAppearing()
         {
+            if (ViewModel == null) return;
             ViewModel.PropertyChanged += ViewModel_PropertyChanged;
 
             base.OnAppearing();
